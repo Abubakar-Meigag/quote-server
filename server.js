@@ -8,15 +8,20 @@ const app = express();
 //load the quotes JSON
 const quotes = require("./quotes.json");
 
+
 // Now register handlers for some routes:
 //   /                  - Return some helpful welcome info (text)
 //   /quotes            - Should return all quotes (json)
 //   /quotes/random     - Should return ONE quote (json)
-app.get("/", function (request, response) {
-  response.send("Neill's Quote Server!  Ask me for /quotes/random, or /quotes");
-});
+// app.get("/", function (request, response) {
+//   response.send("Neill's Quote Server!  Ask me for /quotes/random, or /quotes");
+// });
 
-//START OF YOUR CODE...
+// START OF YOUR CODE...
+
+app.get('/quotes', (req, res) => {
+    res.send(quotes);
+})
 
 //...END OF YOUR CODE
 
@@ -24,9 +29,15 @@ app.get("/", function (request, response) {
 //example: pickFromArray([1,2,3,4]), or
 //example: pickFromArray(myContactsArray)
 //
+
 function pickFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+app.get('/quotes/random', (req, res) => {
+    res.send(pickFromArray(quotes));
+})
+
 
 //Start our server so that it listens for HTTP requests!
 const listener = app.listen(process.env.PORT, function () {
